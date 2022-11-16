@@ -18,6 +18,7 @@ public class Post implements Serializable{
     public String comentarios;
     public LocalDateTime hora;
     public int id_usuario;//FOREIGN KEY 
-    public int id_reaccion; //FOREIGN KEY 
+ 
+    
     
 }

@@ -6,6 +6,7 @@ package dominio;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 
 /**
@@ -23,20 +24,25 @@ public class Cancion implements Serializable{
     public String nombre_album; 
     public String portada; //url conectado con la base de datos en la que esta el url de la imagen de la portada de la cancion IMAGEN
     public Date fecha_cancion;
+    public Time duracion_cancion; 
     
-    public Cancion(int id_cancion, String nombre_cancion, String nombre_album, String portada, Date fecha_cancion) {
+    public Cancion(int id_cancion, String nombre_cancion, String nombre_album, String portada, Time duracion_cancion, Date fecha_cancion) {
         this.id_cancion = id_cancion;
         this.nombre_cancion = nombre_cancion;
         this.nombre_album = nombre_album;
         this.portada = portada;
+        this.duracion_cancion = duracion_cancion;
         this.fecha_cancion = fecha_cancion;
+        
     }
 
-    public Cancion(String nombre_cancion, String nombre_album, String portada,Date fecha_cancion) {
+    public Cancion(String nombre_cancion, String nombre_album, String portada,Time duracion_cancion, Date fecha_cancion) {
         this.nombre_cancion = nombre_cancion;
         this.nombre_album = nombre_album;
         this.portada = portada;
+        this.duracion_cancion = duracion_cancion;
         this.fecha_cancion = fecha_cancion;
+        
     }
 
     
@@ -76,6 +82,16 @@ public class Cancion implements Serializable{
     public void setId_cancion(int id_cancion) {
         this.id_cancion = id_cancion;
     }
+
+    public Time getDuracion_cancion() {
+        return duracion_cancion;
+    }
+
+    public void setDuracion_cancion(Time duracion_cancion) {
+        this.duracion_cancion = duracion_cancion;
+    }
+    
+    
 
     public Date getFecha_cancion() {
         return fecha_cancion;
@@ -129,6 +145,7 @@ public class Cancion implements Serializable{
         sb.append(", nombre_cancion=").append(nombre_cancion);
         sb.append(", nombre_album=").append(nombre_album);
         sb.append(", portada=").append(portada);
+        sb.append(", duración cancion en segundos= ").append(duracion_cancion);
         sb.append(", fecha_cancion=").append(fecha_cancion);
         sb.append('}');
         return sb.toString();

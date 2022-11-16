@@ -16,6 +16,7 @@ import java.io.InputStream;
 import static java.lang.System.exit;
 import java.sql.Blob;
 import java.sql.Date;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,9 +39,17 @@ public class MiAplicacionBeMusic {
     public static void main(String[] args) throws SQLException, ParseException {
 
         Date fCancion = Date.valueOf(LocalDate.now());
-        Cancion can = new Cancion("Joven Jugador","Last 2 People on Earth","url:portada",fCancion);
+        Time duracion =Time.valueOf("00:03:22");
+        System.out.println((duracion.getMinutes()*60)+duracion.getSeconds());
+        long segundo = System.currentTimeMillis();
+        System.out.println(segundo);
+        Cancion can = new Cancion("Joven Jugador","Last 2 People on Earth","url:portada",duracion,fCancion);
+        
+        System.out.println(can);
         
         
+        
+        /*
         //cancionDao.insertar(can);
         try {
             List<Cancion> canciones = cancionDao.seleccionar();
@@ -68,7 +77,7 @@ public class MiAplicacionBeMusic {
         for (Usuario usu : usuList) {
             System.out.println(usu.equals(usuarioLola));
         }
-
+        */
         //menu();
         //usuarioDao.eliminar();
 

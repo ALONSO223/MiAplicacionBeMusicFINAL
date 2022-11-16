@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +32,15 @@ public class CancionDao implements InterfazCancion{
             + "nombre_cancion,"
             + "nombre_album,"
             + "portada,"
-            + "fecha_cancion"
-            + ") VALUES (?,?,?,?)";
+            + "duracion_cancion"
+            + "fecha_cancion,"
+            + ") VALUES (?,?,?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE Cancion SET "
             + "nombre_cancion = ?"
             + "nombre_album = ?"
             + "portada = ?"
+            + "duracion_cancion = ?"
             + "fecha_cancion = ?"
             + "WHERE id_usuario = ?";
     
@@ -66,9 +69,10 @@ public class CancionDao implements InterfazCancion{
             String nombre_album = rs.getString("nombre_album");
             String portada = rs.getString("portada");
             Date fecha_cancion = rs.getDate("fecha_cancion");
+            Time duracion_cancion = rs.getTime("duracion_cancion");
             
             // Instacio un nuevo objeto
-            canciones.add( new Cancion(id_cancion,nombre_cancion,nombre_album,portada,fecha_cancion));
+            canciones.add( new Cancion(id_cancion,nombre_cancion,nombre_album,portada,duracion_cancion,fecha_cancion));
         }
 
         close(rs);
@@ -95,7 +99,8 @@ public class CancionDao implements InterfazCancion{
             stmt.setString(1,cancion.getNombre_cancion());
             stmt.setString(2,cancion.getNombre_album());
             stmt.setString(3,cancion.getPortada());
-            stmt.setDate(4, cancion.getFecha_cancion());
+            stmt.setTime(4,cancion.getDuracion_cancion());
+            stmt.setDate(5, cancion.getFecha_cancion());
             //stmt.setDate(8,usuario.getFecha_alta());
             //Ejecuto la query
             registros = stmt.executeUpdate();
@@ -127,7 +132,8 @@ public class CancionDao implements InterfazCancion{
             stmt.setString(1,cancion.getNombre_cancion());
             stmt.setString(2,cancion.getNombre_album());
             stmt.setString(3,cancion.getPortada());
-            stmt.setDate(4, cancion.getFecha_cancion());
+            stmt.setTime(4,cancion.getDuracion_cancion());
+            stmt.setDate(5, cancion.getFecha_cancion());
             
             registro = stmt.executeUpdate();
             
