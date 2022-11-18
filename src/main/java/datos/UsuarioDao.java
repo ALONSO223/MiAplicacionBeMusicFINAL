@@ -54,7 +54,7 @@ public class UsuarioDao implements InterfazUsuario{
     // Método que nos lista todas las personas de nuestro sistema
 
     @Override
-    public List<Usuario> seleccionar() throws SQLException {
+    public  List<Usuario> seleccionar() throws SQLException {
         
         // Inicializo mis variables
         Connection conn = null;
@@ -92,7 +92,7 @@ public class UsuarioDao implements InterfazUsuario{
     }
 
     @Override
-    public int insertar(Usuario usuario) throws SQLException{
+    public int  insertar(Usuario usuario) throws SQLException{
                 // Declaro e inicializo mis variables
         Connection conn = null;
         PreparedStatement stmt = null;

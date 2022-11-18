@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
@@ -57,13 +58,13 @@ public class implementacion implements crud {
     }
 
     @Override
-    public void escribirArchivoCancion(String nombreArchivo, Cancion canci) {
+    public void escribirArchivoCancion(String nombreArchivo, String contenido) {
         PrintWriter salida = null;
         File archivo = new File(nombreArchivo);
 
         try { //se que el fichero existe
             salida = new PrintWriter(archivo);
-            salida.print(canci);
+            salida.print(contenido);
             System.out.println("Se ha escrito el archivo correctamente.");
         } catch (FileNotFoundException ex) { //el fichero existe => excepcion
             ex.printStackTrace(System.out);
@@ -71,5 +72,7 @@ public class implementacion implements crud {
             salida.close();
         }
     }
+
+
 
 }

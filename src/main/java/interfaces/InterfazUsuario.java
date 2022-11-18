@@ -10,11 +10,9 @@ import java.util.List;
  *
  * @author alooo
  */
-public interface InterfazUsuario{
-    
+public interface InterfazUsuario{    
     public List seleccionar() throws SQLException;
     public int insertar(Usuario usuario) throws SQLException;
     public int actualizar(Usuario usuario);
     public int eliminar(int id);
-     
 }

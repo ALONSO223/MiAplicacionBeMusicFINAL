@@ -25,6 +25,10 @@ public class PlayList {
         incrementar();
         
     }
+
+    public PlayList() {
+        this.id_playlist = incrementar();
+    }
     
     public int incrementar(){
         return contadoresPlayList++;
@@ -61,14 +65,16 @@ public class PlayList {
         StringBuilder sb = new StringBuilder();
         sb.append("PlayList{");
         sb.append("id_playlist=").append(id_playlist);
-        sb.append(", CancionesInsertadas=").append(CancionesInsertadas);
+        sb.append(", \nCancionesInsertadas=\n").append(CancionesInsertadas);
         sb.append('}');
         return sb.toString();
     }
 
+    
+    //Agregamos a una PlayList las canciones en ArrayList para poder trabajar con ellas
     public void agregarCancion(Cancion c){
-        if(CancionesInsertadas.size()>5){
-            System.out.println("No se pueden agregar más de 5 canciones a cada PlayList");
+        if(CancionesInsertadas.size()>=15){
+            System.out.println("No se pueden agregar más de 15 canciones a cada PlayList");
         }else{
             this.CancionesInsertadas.add(c);
         }
@@ -76,7 +82,6 @@ public class PlayList {
     
     //Calculamos la duracion de toda la PlayList, necesitamos agregar
     //la duración de cada canción en forma de Campo en la Clase Cancion
-   
     public double calcularDuracion(){
         int duracion = 0;
         for(Cancion dato: CancionesInsertadas){

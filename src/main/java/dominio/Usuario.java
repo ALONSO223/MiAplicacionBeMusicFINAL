@@ -10,12 +10,12 @@ import java.sql.Date;
 import java.time.*;
 import java.util.Objects;
 
-
 /**
  *
  * @author Alumno Mañana
  */
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
+
     public int id_usuario;
     public String foto_perfil;
     public String nombre_usuario;
@@ -25,7 +25,6 @@ public class Usuario implements Serializable{
     public String correo;
     public int telefono;
     public Date fecha_registro;
-
 
     public Usuario(int id_usuario, String foto_perfil, String nombre_usuario, String contrasenna, String nombre, String apellidos, String correo, int telefono, Date fecha_registro) {
         this.id_usuario = id_usuario;
@@ -38,7 +37,6 @@ public class Usuario implements Serializable{
         this.telefono = telefono;
         this.foto_perfil = foto_perfil;
         this.fecha_registro = fecha_registro;
-        
 
     }
 
@@ -56,8 +54,6 @@ public class Usuario implements Serializable{
     public Usuario(int id_usuario) {
         this.id_usuario = id_usuario;
     }
-    
-    
 
     public Usuario() {
     }
@@ -65,8 +61,6 @@ public class Usuario implements Serializable{
     public int getId_usuario() {
         return id_usuario;
     }
-    
-    
 
     public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
@@ -135,21 +129,15 @@ public class Usuario implements Serializable{
     public void setFecha_registro(Date fecha_registro) {
         this.fecha_registro = fecha_registro;
     }
-    
-    
-
-
-    
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.id_usuario;
-        hash = 53 * hash + Objects.hashCode(this.correo);
-        hash = 53 * hash + this.telefono;
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.nombre_usuario);
         return hash;
     }
 
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -162,17 +150,8 @@ public class Usuario implements Serializable{
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (this.telefono != other.telefono) {
-            return false;
-        }
-        if (!Objects.equals(this.nombre_usuario, other.nombre_usuario)) {
-            return false;
-        }
-        return Objects.equals(this.correo, other.correo);
+        return Objects.equals(this.nombre_usuario, other.nombre_usuario);
     }
-
-
-    
 
     @Override
     public String toString() {
@@ -191,8 +170,4 @@ public class Usuario implements Serializable{
         return sb.toString();
     }
 
-    
-    
-    
-    
 }

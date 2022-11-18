@@ -32,8 +32,8 @@ public class CancionDao implements InterfazCancion{
             + "nombre_cancion,"
             + "nombre_album,"
             + "portada,"
-            + "duracion_cancion"
-            + "fecha_cancion,"
+            + "duracion_cancion,"
+            + "fecha_cancion"
             + ") VALUES (?,?,?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE Cancion SET "
@@ -68,7 +68,7 @@ public class CancionDao implements InterfazCancion{
             String nombre_cancion = rs.getString("nombre_cancion");
             String nombre_album = rs.getString("nombre_album");
             String portada = rs.getString("portada");
-            Date fecha_cancion = rs.getDate("fecha_cancion");
+            int fecha_cancion = rs.getInt("fecha_cancion");
             Time duracion_cancion = rs.getTime("duracion_cancion");
             
             // Instacio un nuevo objeto
@@ -100,7 +100,7 @@ public class CancionDao implements InterfazCancion{
             stmt.setString(2,cancion.getNombre_album());
             stmt.setString(3,cancion.getPortada());
             stmt.setTime(4,cancion.getDuracion_cancion());
-            stmt.setDate(5, cancion.getFecha_cancion());
+            stmt.setInt(5, cancion.getFecha_cancion());
             //stmt.setDate(8,usuario.getFecha_alta());
             //Ejecuto la query
             registros = stmt.executeUpdate();
@@ -133,7 +133,7 @@ public class CancionDao implements InterfazCancion{
             stmt.setString(2,cancion.getNombre_album());
             stmt.setString(3,cancion.getPortada());
             stmt.setTime(4,cancion.getDuracion_cancion());
-            stmt.setDate(5, cancion.getFecha_cancion());
+            stmt.setInt(5, cancion.getFecha_cancion());
             
             registro = stmt.executeUpdate();
             

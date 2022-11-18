@@ -11,9 +11,7 @@ import dominio.Cancion;
  * @author alooo
  */
 public interface crud {
-    
     public abstract void crearArchivo(String nombre);
     public abstract void leerArchivoCancion(String nombreArchivo);
-    public abstract void escribirArchivoCancion(String nombreArchivo, Cancion canci);
-    
+    public abstract void escribirArchivoCancion(String nombreArchivo, String contenido);
 }

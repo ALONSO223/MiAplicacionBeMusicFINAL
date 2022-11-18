@@ -7,9 +7,11 @@ package com.mycompany.miaplicacionbemusic;
 import java.sql.SQLException;
 import java.util.List;
 import dominio.Usuario;
-import datos.UsuarioDao;
 import datos.*;
+import datosFichero.implementacion;
+import interfaces.*;
 import dominio.Cancion;
+import dominio.PlayList;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -33,24 +35,79 @@ public class MiAplicacionBeMusic {
     static Scanner ent = new Scanner(System.in);
 
     static List<Usuario> usuList = new LinkedList<>();
-    static UsuarioDao usuarioDao = new UsuarioDao();
-    static CancionDao cancionDao = new CancionDao();
+    static List<Cancion> canList = new LinkedList<>();
+    //Creo el objeto desde la clase Interfaz
+    static InterfazUsuario usuarioDao = new UsuarioDao();
+    static InterfazCancion cancionDao = new CancionDao();
 
     public static void main(String[] args) throws SQLException, ParseException {
 
-        Date fCancion = Date.valueOf(LocalDate.now());
+        
+        menu();
+        
+        
+        /*
+        try {
+            List<Cancion> canciones = cancionDao.seleccionar();
+            canciones.forEach(cancion -> {
+                System.out.println("Cancion " + cancion.id_cancion + "= " + cancion);
+                canList.add(cancion);
+            }
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+
+        System.out.println(canList);
+
+        PlayList playlist1 = new PlayList();
+
+        for (Cancion can : canList) {
+            playlist1.agregarCancion(can);
+        }
+
+        String nombreArchivo = "PlayLists.txt";
+        String contenido = playlist1.toString();
+        implementacion imp = new implementacion();
+        imp.crearArchivo(nombreArchivo);
+        imp.escribirArchivoCancion(nombreArchivo, contenido);
+        imp.leerArchivoCancion(nombreArchivo);
+        */
+        
+        
+        
+        
+        
+        
+        
+        
+
+        /*
+        Date fCancion = Date.valueOf("2002-09-21");
         Time duracion =Time.valueOf("00:03:22");
         System.out.println((duracion.getMinutes()*60)+duracion.getSeconds());
         long segundo = System.currentTimeMillis();
         System.out.println(segundo);
-        Cancion can = new Cancion("Joven Jugador","Last 2 People on Earth","url:portada",duracion,fCancion);
+        Cancion can = new Cancion("Joven Jugador","Last 2 People on Earth","url:portada",duracion,2020);
+        Cancion can2 = new Cancion("More M's","Her Loss","url:portada",duracion,2022);
+        Cancion can3 = new Cancion("Kurt Cobain","D.Valentino","url:portada",duracion,2022);
         
-        System.out.println(can);
+        //System.out.println(can);
+        
+        //menu();
+        
+        //cancionDao.insertar(can3);
+        //cancionDao.eliminar(3);
+        
+        //Creamos el usuario, el id y la fecha de creacion del usuario se rellenan directamente
+        Usuario usu1 = new Usuario ("url:foto_perfil","AlonsoCas","12345","Alonso","Pérez","alonso@gmail.com",678384810);
+        
+        //Insertamos el usuario creado en la base de datos
+        //InterfazUsuario.insertar(usu1);
+        usuarioDao.insertar(usu1);
         
         
         
-        /*
-        //cancionDao.insertar(can);
         try {
             List<Cancion> canciones = cancionDao.seleccionar();
             canciones.forEach(cancion -> {
@@ -77,7 +134,7 @@ public class MiAplicacionBeMusic {
         for (Usuario usu : usuList) {
             System.out.println(usu.equals(usuarioLola));
         }
-        */
+         */
         //menu();
         //usuarioDao.eliminar();
 
@@ -136,7 +193,7 @@ public class MiAplicacionBeMusic {
                     iniciarUsuario();
                     break;
                 case 3:
-                    //registrarCancion();
+                    registrarCancion();
                     break;
                 case 4:
                     inicioAdmin();
@@ -157,11 +214,14 @@ public class MiAplicacionBeMusic {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("-----------------------------------------");
-            System.out.println("--    INTERFAZ USUARIO                ---");
+            System.out.println("--         INTERFAZ USUARIO           ---");
             System.out.println("-----------------------------------------");
             System.out.println("--  1- PUBLICAR POST CANCION           --");
             System.out.println("--  2- COMENTAR                        --");
-            System.out.println("--  0-  SALIR                          --");
+            System.out.println("--  3- CAMBIAR CORREO ELECTRONICO      --");
+            System.out.println("--  4- BUSCAR USUARIO                  --");
+            System.out.println("--  5- CREAR PLAYLIST (FORMATO .TXT)   --");
+            System.out.println("--  0- SALIR                           --");
             System.out.println("-----------------------------------------");
             System.out.println("-----------------------------------------");
             System.out.println("--  Introduce opción: ");
@@ -174,6 +234,12 @@ public class MiAplicacionBeMusic {
 
                     break;
                 case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
 
                     break;
                 case 0:
@@ -232,6 +298,8 @@ public class MiAplicacionBeMusic {
 
     }
 
+    //Función para insertar un Usuario a la base de datos desde la terminal (menu1)
+    //Función que conecta con la clase UsuarioDao para hacer uso del metodo insertar(Usuario)
     public static void registrarUsuario() throws SQLException {
         boolean control = true;
         //Usuario usu1 = new Usuario ("url:foto_perfil","AlonsoCas","12345","Alonso","Pérez","alonso@gmail.com",678384810);
@@ -263,20 +331,96 @@ public class MiAplicacionBeMusic {
 
         Usuario usuarioRegistro = new Usuario(foto_perfil, nombreUsuario, contrasenna, nombre, apellidos, email, telefono);
         //el usuario registro lo crea 
-        for (Usuario usu : usuList) {
-            if (usuarioRegistro.equals(usu) == true) {
-                control = true;
-            } else {
-                control = false;
+        if (foto_perfil != null && nombreUsuario != null && contrasenna != null && nombre != null && apellidos != null && email != null && telefono != 0) {
+            for (Usuario usu : usuList) {
+                if (usuarioRegistro.equals(usu) == true) {
+                    control = true;
+                } else {
+                    control = false;
+                }
+            }
+            if (control == false) {
+                usuarioDao.insertar(usuarioRegistro);
+                System.out.println("Usuario registrado correctamente en la base de datos!");
+            } else if (control == true) {
+                System.out.println("La dirección de correo o el nombre de usuairo o el telefono ya están en uso. Porfavor inserte datos no utilizados anteriormente");
+                menu();
             }
         }
-        if (control == false) {
-            usuarioDao.insertar(usuarioRegistro);
-            System.out.println("Usuario registrado correctamente en la base de datos!");
-        } else if (control == true) {
-            System.out.println("La dirección de correo o el nombre de usuairo o el telefono ya están en uso. Porfavor inserte datos no utilizados anteriormente");
-            menu();
+    }
+
+    public static void registrarCancion() throws SQLException {
+        boolean control = true;
+        //Usuario usu1 = new Usuario ("url:foto_perfil","AlonsoCas","12345","Alonso","Pérez","alonso@gmail.com",678384810);
+        String nombre_cancion;
+        String nombre_album;
+        String portada;
+        int fecha_cancion;
+        String duracion_cancion;
+        System.out.println("-----------------------------------------");
+        System.out.println("--         REGISTRO CANCION           ---");
+        System.out.println("-----------------------------------------");
+        System.out.println("--Introduce nombre de la canción: ");
+        nombre_cancion = ent.nextLine();
+        nombre_cancion = ent.nextLine();
+        System.out.println("--Nombre del album: ");
+        nombre_album = ent.nextLine();
+        System.out.println("--Portada del album/canción: ");
+        portada = ent.nextLine();
+        System.out.println("--Año de la canción: ");
+        fecha_cancion = ent.nextInt();
+        System.out.println("--Duración de la cancion(con el siguiente formato[HH:MM:SS]): ");
+        duracion_cancion = ent.nextLine();
+        duracion_cancion = ent.nextLine();
+        Time duracion = Time.valueOf(duracion_cancion);
+
+        Cancion cancionRegistro = new Cancion(nombre_cancion, nombre_album, portada, duracion, fecha_cancion);
+
+        if (nombre_cancion != null && fecha_cancion != 0 && duracion_cancion != null) {
+            for (Cancion can : canList) {
+                if (cancionRegistro.equals(can) == true) {
+                    control = true;
+                } else {
+                    control = false;
+                }
+            }
+            if (control == false) {
+                cancionDao.insertar(cancionRegistro);
+                System.out.println("Canción registrada y almacenada correctamente en la aplicación!");
+                System.out.println("En cuanto la canción este verificada se podrá insertar en los posts.");
+            } else if (control == true) {
+                System.out.println("La canción insertada ya se encuentra en la aplicación, \nporfavor introduzca una que todavia no esté registrada.");
+                menu();
+            }
+        } else {
+            System.out.println("El nombre de la canción, el año y la duración son campos obligatorios,\n porfavor rellenelos para poder registrar la cancion correctament");
         }
+    }
+
+    public static void iniciarUsuario() {
+        String nombre;
+        String contrasenna;
+        System.out.println("-----------------------------------------");
+        System.out.println("--         REGISTRO USUARIO           ---");
+        System.out.println("-----------------------------------------");
+        System.out.println("--Introduce Nombre de Usuario: ");
+        nombre = ent.nextLine();
+        nombre = ent.nextLine();
+        for (Usuario usu : usuList) {
+            if (nombre == usu.getNombre_usuario()) {
+                System.out.println("--Introduce la contraseña de usuario con correo " + usu.getCorreo() + ":  ");
+                contrasenna = ent.nextLine();
+                if (contrasenna == usu.getContrasenna()) {
+                    System.out.println("Contraseña introducida correctamente. Cuenta registrada correctamente.");
+                    menuUsuario();
+                } else {
+                    System.out.println("Contraseña introducida incorrecta, intentalo de nuevo: ");
+                    contrasenna = ent.nextLine();
+                    break;
+                }
+            }
+        }
+
     }
 
     public static void inicioAdmin() throws SQLException {
@@ -291,12 +435,6 @@ public class MiAplicacionBeMusic {
             System.out.println("Contraseña introducida incorrecta");
             menu();
         }
-
-    }
-
-    public static void iniciarUsuario() {
-
-        menuUsuario();
 
     }
 }

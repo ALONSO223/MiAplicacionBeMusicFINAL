@@ -23,10 +23,10 @@ public class Cancion implements Serializable{
     public String nombre_cancion;
     public String nombre_album; 
     public String portada; //url conectado con la base de datos en la que esta el url de la imagen de la portada de la cancion IMAGEN
-    public Date fecha_cancion;
+    public int fecha_cancion; //año de salida de la cancion
     public Time duracion_cancion; 
     
-    public Cancion(int id_cancion, String nombre_cancion, String nombre_album, String portada, Time duracion_cancion, Date fecha_cancion) {
+    public Cancion(int id_cancion, String nombre_cancion, String nombre_album, String portada, Time duracion_cancion, int fecha_cancion) {
         this.id_cancion = id_cancion;
         this.nombre_cancion = nombre_cancion;
         this.nombre_album = nombre_album;
@@ -36,7 +36,7 @@ public class Cancion implements Serializable{
         
     }
 
-    public Cancion(String nombre_cancion, String nombre_album, String portada,Time duracion_cancion, Date fecha_cancion) {
+    public Cancion(String nombre_cancion, String nombre_album, String portada,Time duracion_cancion, int fecha_cancion) {
         this.nombre_cancion = nombre_cancion;
         this.nombre_album = nombre_album;
         this.portada = portada;
@@ -91,27 +91,21 @@ public class Cancion implements Serializable{
         this.duracion_cancion = duracion_cancion;
     }
     
-    
-
-    public Date getFecha_cancion() {
+    public int getFecha_cancion() {
         return fecha_cancion;
     }
 
-    public void setFecha_cancion(Date fecha_cancion) {
+    public void setFecha_cancion(int fecha_cancion) {
         this.fecha_cancion = fecha_cancion;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.id_cancion;
-        hash = 97 * hash + Objects.hashCode(this.nombre_cancion);
-        hash = 97 * hash + Objects.hashCode(this.nombre_album);
-        hash = 97 * hash + Objects.hashCode(this.portada);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.nombre_cancion);
         return hash;
     }
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -125,29 +119,22 @@ public class Cancion implements Serializable{
             return false;
         }
         final Cancion other = (Cancion) obj;
-        if (this.id_cancion != other.id_cancion) {
-            return false;
-        }
-        if (!Objects.equals(this.nombre_cancion, other.nombre_cancion)) {
-            return false;
-        }
-        if (!Objects.equals(this.nombre_album, other.nombre_album)) {
-            return false;
-        }
-        return Objects.equals(this.portada, other.portada);
+        return Objects.equals(this.nombre_cancion, other.nombre_cancion);
     }
+
+    
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cancion{");
+        sb.append("\nCancion{");
         sb.append("id_cancion=").append(id_cancion);
         sb.append(", nombre_cancion=").append(nombre_cancion);
         sb.append(", nombre_album=").append(nombre_album);
         sb.append(", portada=").append(portada);
         sb.append(", duración cancion en segundos= ").append(duracion_cancion);
         sb.append(", fecha_cancion=").append(fecha_cancion);
-        sb.append('}');
+        sb.append("} \n");
         return sb.toString();
     }
 
