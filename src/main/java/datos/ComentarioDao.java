@@ -7,13 +7,13 @@ package datos;
 import static conexion.Conexion.close;
 import static conexion.Conexion.getConnection;
 import dominio.Comentario;
-import dominio.Post;
-import interfaces.InterfazPost;
+import interfaces.InterfazComentario;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,62 +21,68 @@ import java.util.List;
  *
  * @author Alumno Mañana
  */
-public class PostDao implements InterfazPost{
-    
-    private static final String SQL_SELECT = "SELECT * FROM Post";
+public class ComentarioDao implements InterfazComentario {
 
-    private static final String SQL_INSERT = "INSERT INTO Post ("
+    private static final String SQL_SELECT = "SELECT * FROM Comentario";
+
+    private static final String SQL_INSERT = "INSERT INTO Comentario ("
+            + "reacciones_foto,"
+            + "valoracion_usuario,"
+            + "comentario,"
             + "fecha_publicacion,"
             + "usuario_id_usuario,"
-            + "canciones_id_cancion,"
-            + "descripcion"
-            + ") VALUES (?,?,?,?)";
+            + "post_id_post"
+            + ") VALUES (?,?,?,?,?,?)";
 
-    private static final String SQL_UPDATE = "UPDATE Post SET "
+    private static final String SQL_UPDATE = "UPDATE Comentario SET "
+            + "reacciones_foto = ?"
+            + "valoracion_usuario = ?"
+            + "comentario = ?"
             + "fecha_publicacion = ?"
             + "usuario_id_usuario = ?"
-            + "canciones_id_cancion = ?"
-            + "descripcion = ?"
-            + "WHERE id_post = ?";
+            + "post_id_post = ?"
+            + "WHERE id_comentario = ?";
 
-    private static final String SQL_DELETE = "DELETE FROM Post WHERE id_post = ?";
+    private static final String SQL_DELETE = "DELETE FROM Comentario WHERE id_comentario = ?";
 
     // Método que nos lista todas las personas de nuestro sistema
     @Override
-    public List<Post> seleccionar() throws SQLException {
+    public List<Comentario> seleccionar() throws SQLException {
 
         // Inicializo mis variables
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Post post = null;
-        List<Post> posts = new ArrayList<>();
+        Comentario comentario1 = null;
+        List<Comentario> comentarios = new ArrayList<>();
 
         conn = getConnection();
         stmt = conn.prepareStatement(SQL_SELECT);
         rs = stmt.executeQuery();
 
         while (rs.next()) {
-            
-            int id_post = rs.getInt("id_post");
+
+            int id_comentario = rs.getInt("id_comentario");
+            String reacciones_foto = rs.getString("reacciones_foto");
+            int valoracion_usuario = rs.getInt("valoracion_usuario");
+            String comentario = rs.getString("comentario");
             Date fecha_publicacion = rs.getDate("fecha_publicacion");
             int id_usuario = rs.getInt("usuario_id_usuario");
-            int id_cancion = rs.getInt("canciones_id_cancion");
-            String descripcion = rs.getString("descripcion");
-            
+            int id_post = rs.getInt("post_id_post");
+
             // Instacio un nuevo objeto
-            posts.add(new Post(id_post,fecha_publicacion,id_usuario,id_cancion,descripcion));
+            comentarios.add(new Comentario(id_comentario, reacciones_foto, valoracion_usuario, comentario, fecha_publicacion, id_usuario, id_post));
         }
 
         close(rs);
         close(stmt);
         close(conn);
 
-        return posts;
+        return comentarios;
     }
 
     @Override
-    public int insertar(Post post) throws SQLException {
+    public int insertar(Comentario comentario) throws SQLException {
         // Declaro e inicializo mis variables
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -89,11 +95,12 @@ public class PostDao implements InterfazPost{
             //2. Preparo mi instruccion para ejecutarla con la base de datos 
             stmt = conn.prepareStatement(SQL_INSERT);
             //3. Asignamos los valores a los ? de la consulta
-            
-            stmt.setDate(1, post.getFecha_publicacion());
-            stmt.setInt(2, post.getId_usuario());
-            stmt.setInt(3,post.getId_cancion());
-            stmt.setString(4, post.getDescripcion());
+            stmt.setString(1, comentario.getReacciones_foto());
+            stmt.setInt(2, comentario.getValoracion_usuario());
+            stmt.setString(3, comentario.getComentario());
+            stmt.setDate(4, comentario.getFecha_publicacion());
+            stmt.setInt(5, comentario.getId_usuario());
+            stmt.setInt(6, comentario.getId_post());
 
             //Ejecuto la query
             registros = stmt.executeUpdate();
@@ -112,7 +119,7 @@ public class PostDao implements InterfazPost{
     }
 
     @Override
-    public int actualizar(Post post) {
+    public int actualizar(Comentario comentario) {
         //Inicializo mis componentes/variables
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -122,11 +129,12 @@ public class PostDao implements InterfazPost{
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
 
-            stmt.setDate(1, post.getFecha_publicacion());
-            stmt.setInt(2, post.getId_usuario());
-            stmt.setInt(3,post.getId_cancion());
-            stmt.setString(4, post.getDescripcion());
-
+            stmt.setString(1, comentario.getReacciones_foto());
+            stmt.setInt(2, comentario.getValoracion_usuario());
+            stmt.setString(3, comentario.getComentario());
+            stmt.setDate(4, comentario.getFecha_publicacion());
+            stmt.setInt(5, comentario.getId_usuario());
+            stmt.setInt(6, comentario.getId_post());
 
             registro = stmt.executeUpdate();
 
@@ -170,5 +178,5 @@ public class PostDao implements InterfazPost{
 
         return registro;
     }
-    
+
 }

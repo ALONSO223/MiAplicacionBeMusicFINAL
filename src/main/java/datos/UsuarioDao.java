@@ -8,6 +8,9 @@ import static conexion.Conexion.close;
 import static conexion.Conexion.getConnection;
 import interfaces.InterfazUsuario;
 import dominio.Usuario;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,6 +21,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,6 +55,8 @@ public class UsuarioDao implements InterfazUsuario{
             + "WHERE id_usuario = ?";
     
     private static final String SQL_DELETE = "DELETE FROM Usuario WHERE id_usuario = ?";
+    
+    
     
     // Método que nos lista todas las personas de nuestro sistema
 
@@ -94,9 +101,11 @@ public class UsuarioDao implements InterfazUsuario{
     @Override
     public int  insertar(Usuario usuario) throws SQLException{
                 // Declaro e inicializo mis variables
+
         Connection conn = null;
         PreparedStatement stmt = null;
         int registros = 0;
+        
         
         try{
             //1. establecemos la conexion 
@@ -105,9 +114,18 @@ public class UsuarioDao implements InterfazUsuario{
             //2. Preparo mi instruccion para ejecutarla con la base de datos 
             stmt = conn.prepareStatement(SQL_INSERT);
             //3. Asignamos los valores a los ? de la consulta
+        String md5 = null;
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        digest.update(usuario.getContrasenna().getBytes(), 0, usuario.contrasenna.length());
+        // Converts message digest value in base 16 (hex)
+        md5 = new BigInteger(1, digest.digest()).toString(16);
+            
+            
+            
+            
             stmt.setString(1,usuario.getFoto_perfil());
             stmt.setString(2,usuario.getNombre_usuario());
-            stmt.setString(3,usuario.getContrasenna());
+            stmt.setString(3,md5);
             stmt.setString(4,usuario.getNombre());        
             stmt.setString(5,usuario.getApellidos());
             stmt.setString(6,usuario.getCorreo());
@@ -118,6 +136,8 @@ public class UsuarioDao implements InterfazUsuario{
             registros = stmt.executeUpdate();
         }catch (SQLException ex){
             ex.printStackTrace(System.out);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             try {
                 close(stmt);
@@ -191,6 +211,24 @@ public class UsuarioDao implements InterfazUsuario{
         
         return registro;
     }
+    
+    public static String convertToMD5(String input) throws Exception {
+    String md5 = null;
+    if (null == input)
+        return null;
+    try {
+        // Create MessageDigest object for MD5
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        // Update input string in message digest
+        digest.update(input.getBytes(), 0, input.length());
+        // Converts message digest value in base 16 (hex)
+        md5 = new BigInteger(1, digest.digest()).toString(16);
+    } catch (NoSuchAlgorithmException e) {
+
+        throw e;
+    }
+    return md5;
+}
 
 
 }

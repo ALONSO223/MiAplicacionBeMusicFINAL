@@ -30,14 +30,16 @@ public class CancionDao implements InterfazCancion{
     
     private static final String SQL_INSERT = "INSERT INTO Cancion ("
             + "nombre_cancion,"
+            + "artista,"
             + "nombre_album,"
             + "portada,"
             + "duracion_cancion,"
             + "fecha_cancion"
-            + ") VALUES (?,?,?,?,?)";
+            + ") VALUES (?,?,?,?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE Cancion SET "
             + "nombre_cancion = ?"
+            + "artista = ?"
             + "nombre_album = ?"
             + "portada = ?"
             + "duracion_cancion = ?"
@@ -66,13 +68,14 @@ public class CancionDao implements InterfazCancion{
            
             int id_cancion = rs.getInt("id_cancion");
             String nombre_cancion = rs.getString("nombre_cancion");
+            String artista = rs.getString("artista");
             String nombre_album = rs.getString("nombre_album");
             String portada = rs.getString("portada");
             int fecha_cancion = rs.getInt("fecha_cancion");
             Time duracion_cancion = rs.getTime("duracion_cancion");
             
             // Instacio un nuevo objeto
-            canciones.add( new Cancion(id_cancion,nombre_cancion,nombre_album,portada,duracion_cancion,fecha_cancion));
+            canciones.add( new Cancion(id_cancion,nombre_cancion,artista,nombre_album,portada,duracion_cancion,fecha_cancion));
         }
 
         close(rs);
@@ -97,10 +100,11 @@ public class CancionDao implements InterfazCancion{
             stmt = conn.prepareStatement(SQL_INSERT);
             //3. Asignamos los valores a los ? de la consulta
             stmt.setString(1,cancion.getNombre_cancion());
-            stmt.setString(2,cancion.getNombre_album());
-            stmt.setString(3,cancion.getPortada());
-            stmt.setTime(4,cancion.getDuracion_cancion());
-            stmt.setInt(5, cancion.getFecha_cancion());
+            stmt.setString(2,cancion.getArtista());
+            stmt.setString(3,cancion.getNombre_album());
+            stmt.setString(4,cancion.getPortada());
+            stmt.setTime(5,cancion.getDuracion_cancion());
+            stmt.setInt(6, cancion.getFecha_cancion());
             //stmt.setDate(8,usuario.getFecha_alta());
             //Ejecuto la query
             registros = stmt.executeUpdate();
@@ -117,7 +121,7 @@ public class CancionDao implements InterfazCancion{
         
         return registros;
     }
-    
+
     @Override
         public int actualizar(Cancion cancion){
         //Inicializo mis componentes/variables
@@ -130,10 +134,12 @@ public class CancionDao implements InterfazCancion{
             stmt = conn.prepareStatement(SQL_UPDATE);
             
             stmt.setString(1,cancion.getNombre_cancion());
-            stmt.setString(2,cancion.getNombre_album());
-            stmt.setString(3,cancion.getPortada());
-            stmt.setTime(4,cancion.getDuracion_cancion());
-            stmt.setInt(5, cancion.getFecha_cancion());
+            stmt.setString(2,cancion.getArtista());
+            stmt.setString(3,cancion.getNombre_album());
+            stmt.setString(4,cancion.getPortada());
+            stmt.setTime(5,cancion.getDuracion_cancion());
+            stmt.setInt(6, cancion.getFecha_cancion());
+            
             
             registro = stmt.executeUpdate();
             
