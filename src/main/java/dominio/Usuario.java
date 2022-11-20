@@ -228,9 +228,18 @@ public class Usuario implements Serializable {
         }
     }
 
-
-
     public static List<Usuario> seleccionarUsuarios() {
+        InterfazUsuario usuarioDao = new UsuarioDao();
+        List<Usuario> usuarioLista = null;
+        try {
+            usuarioLista = usuarioDao.seleccionar();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+        return usuarioLista;
+    }
+
+    public static List<Usuario> seleccionarUsuariosID(int id) {
         InterfazUsuario usuarioDao = new UsuarioDao();
         List<Usuario> usuarioLista = null;
         try {
@@ -250,10 +259,10 @@ public class Usuario implements Serializable {
             }
         }
         return esta;
-        
+
     }
-    
-     public static int estaID(String nombre) {
+
+    public static int estaID(String nombre) {
         Usuario usuario = null;
         int id = 0;
         for (int i = 0; i < usuario.seleccionarUsuarios().size(); i++) {
@@ -262,9 +271,10 @@ public class Usuario implements Serializable {
             }
         }
         return id;
-        
+
     }
-     public static String estaContrasenna(String nombre) {
+
+    public static String estaContrasenna(String nombre) {
         Usuario usuario = null;
         String contra = "";
         for (int i = 0; i < usuario.seleccionarUsuarios().size(); i++) {
@@ -273,24 +283,34 @@ public class Usuario implements Serializable {
             }
         }
         return contra;
+
+    }
+
+    public static boolean comparadorContrasennas(String orig, String compare) {
+        String md5 = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(compare.getBytes());
+            byte[] digest = md.digest();
+            md5 = new BigInteger(1, digest).toString(16);
+
+            return md5.equals(orig);
+
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
+
+    }
+    
+    public static Usuario devolverUsuario(int id){
         
+        Usuario usu = new Usuario();
+        for (int i = 0; i < usu.seleccionarUsuarios().size(); i++) {
+            if(id == usu.seleccionarUsuarios().get(i).getId_usuario()){
+                usu = usu.seleccionarUsuarios().get(i);
+            }
+        }
+        return usu;
     }
-     
-         public static boolean comparadorContrasennas(String orig, String compare){
-    String md5 = null;
-    try{
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(compare.getBytes());
-        byte[] digest = md.digest();
-        md5 = new BigInteger(1, digest).toString(16);
-
-        return md5.equals(orig);
-
-    } catch (NoSuchAlgorithmException e) {
-        return false;
-    }
-
-             
-         }
 
 }

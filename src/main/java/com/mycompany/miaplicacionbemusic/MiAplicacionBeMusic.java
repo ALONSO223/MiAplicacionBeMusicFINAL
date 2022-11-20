@@ -58,6 +58,8 @@ public class MiAplicacionBeMusic {
         Cancion can4 = new Cancion("WORLD ON FIRE", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
         Cancion can5 = new Cancion("SUN MOON", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
 
+        System.out.println(Usuario.devolverUsuario(32));
+
         System.out.println(Cancion.estaCancion("ALL NIGHT LONG"));
         System.out.println(Cancion.estaIDCancion("ALL NIHGT LONG"));
         System.out.println(Usuario.estaContrasenna("alex32"));
@@ -68,8 +70,28 @@ public class MiAplicacionBeMusic {
             System.out.println(usuario);
         }
         );
+        List<Cancion> canciones = cancionDao.seleccionar();
+        canciones.forEach(cancion -> {
 
-        menu();
+            System.out.println(cancion);
+        }
+        );
+
+        List<Comentario> comentarios = comentarioDao.seleccionar();
+        comentarios.forEach(comentario -> {
+
+            System.out.println(comentario);
+        }
+        );
+
+        List<Post> posts = postDao.seleccionar();
+        posts.forEach(post -> {
+
+            System.out.println(post);
+        }
+        );
+
+        //menu();
         /*
         
         
@@ -325,7 +347,7 @@ public class MiAplicacionBeMusic {
                     System.out.println(id);
                     break;
                 case 3:
-
+                    actualizarCorreo(id);
                     break;
                 case 4:
 
@@ -473,6 +495,28 @@ public class MiAplicacionBeMusic {
                 System.out.println("Usuario no encontrado en el sistema o Contraseña incorrecta.");
             }
 
+        }
+
+    }
+
+    public static void actualizarCorreo(int id) {
+        Usuario usuario = new Usuario();
+        usuario = Usuario.devolverUsuario(id);
+        boolean seguro;
+
+        System.out.println("El correo actual es " + usuario.getCorreo() + ", esta seguro de que quiere cambiarlo?(S/N)");
+        String seguridad = ent.nextLine();
+        if (seguridad.toUpperCase() == "S") {
+
+            System.out.println("Introduce el nuevo correo electronico: ");
+            String correo = ent.nextLine();
+            usuario.setCorreo(correo);
+
+            usuarioDao.actualizar(usuario);
+            System.out.println("Correo actualizado correctamente.");
+            System.out.println("Usuario: " + usuario);
+        } else {
+            System.out.println("El correo no se actualizará, si quiere actualizrlo, vuelve a intentarlo.");
         }
 
     }
