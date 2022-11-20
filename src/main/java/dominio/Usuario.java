@@ -228,51 +228,7 @@ public class Usuario implements Serializable {
         }
     }
 
-    public static void publicarPost() throws SQLException {
-        InterfazUsuario usuarioDao = new UsuarioDao();
-        String foto_perfil;
-        String nombreUsuario;
-        String contrasenna;
-        String nombre;
-        String apellidos;
-        String email;
-        int telefono;
-        System.out.println("-----------------------------------------");
-        System.out.println("--           PUBLICAR POST            ---");
-        System.out.println("-----------------------------------------");
-        System.out.println("--Introduce la url de la foto de perfil: ");
-        foto_perfil = ent.nextLine();
-        foto_perfil = ent.nextLine();
-        System.out.println("--Nombre de usuario: ");
-        nombreUsuario = ent.nextLine();
-        System.out.println("--Contraseña: ");
-        contrasenna = ent.nextLine();
-        System.out.println("--Nombre: ");
-        nombre = ent.nextLine();
-        System.out.println("--Apellidos: ");
-        apellidos = ent.nextLine();
-        System.out.println("--Correo Electronico: ");
-        email = ent.nextLine();
-        System.out.println("--Telefono Movil: ");
-        telefono = ent.nextInt();
 
-        Usuario usuarioRegistro = new Usuario(foto_perfil, nombreUsuario, contrasenna, nombre, apellidos, email, telefono);
-        //el usuario registro lo crea 
-        if (nombreUsuario != null && contrasenna != null && nombre != null && apellidos != null && email != null && telefono != 0) {
-            boolean esta = MiAplicacionBeMusic.usuList.contains(usuarioRegistro);
-            if (esta == false) {
-                usuarioDao.insertar(usuarioRegistro);
-                MiAplicacionBeMusic.usuList.add(usuarioRegistro);
-                System.out.println("Usuario registrado correctamente en la base de datos!");
-            } else if (esta == true) {
-                System.out.println("La dirección de correo o el nombre de usuairo o el telefono ya están en uso. Porfavor inserte datos no utilizados anteriormente");
-                MiAplicacionBeMusic.menu();
-            }
-        } else {
-            System.out.println("Los campos nombreUsuario, contrasenna, nombre, apellidos, email y telefono son obligatorios\n porfavor vuelve a registrar el usuario con los campos rellenados");
-
-        }
-    }
 
     public static List<Usuario> seleccionarUsuarios() {
         InterfazUsuario usuarioDao = new UsuarioDao();
@@ -302,10 +258,21 @@ public class Usuario implements Serializable {
         int id = 0;
         for (int i = 0; i < usuario.seleccionarUsuarios().size(); i++) {
             if (nombre.equals(usuario.seleccionarUsuarios().get(i).getNombre_usuario())) {
-                id = usuario.getId_usuario();
+                id = usuario.seleccionarUsuarios().get(i).id_usuario;
             }
         }
         return id;
+        
+    }
+     public static String estaContrasenna(String nombre) {
+        Usuario usuario = null;
+        String contra = "";
+        for (int i = 0; i < usuario.seleccionarUsuarios().size(); i++) {
+            if (nombre.equals(usuario.seleccionarUsuarios().get(i).getNombre_usuario())) {
+                contra = usuario.seleccionarUsuarios().get(i).contrasenna;
+            }
+        }
+        return contra;
         
     }
      

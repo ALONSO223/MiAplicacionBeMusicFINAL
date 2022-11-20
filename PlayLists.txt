@@ -1,9 +1,0 @@
-PlayList{id_playlist=0, 
-CancionesInsertadas=
-[
-Cancion{id_cancion=4, nombre_cancion=Joven Jugador, nombre_album=Last 2 People on Earth, portada=url:portada, duración cancion en segundos= 00:03:22, fecha_cancion=2020} 
-, 
-Cancion{id_cancion=5, nombre_cancion=More M's, nombre_album=Her Loss, portada=url:portada, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
-, 
-Cancion{id_cancion=6, nombre_cancion=Kurt Cobain, nombre_album=D.Valentino, portada=url:portada, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
-]}

@@ -14,6 +14,7 @@ import dominio.Cancion;
 import dominio.Comentario;
 import dominio.PlayList;
 import dominio.Post;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -50,20 +51,35 @@ public class MiAplicacionBeMusic {
     static InterfazComentario comentarioDao = new ComentarioDao();
 
     public static void main(String[] args) throws SQLException, ParseException {
-        
-        Usuario usu1 = new Usuario ("url:foto_perfil","alonso_2022","12345","Alonso","Pérez","alonso@gmail.com",678384810);
-        Usuario usu2 = new Usuario ("url:foto_perfil","alex32","12345","Alejandro","Perez","alejandro@gmail.com",654321098);
-        
-        usuarioDao.insertar(usu2);
-        
+        Time duracion = Time.valueOf("00:03:22");
+        Cancion can1 = new Cancion("ALL NIGHT LONG", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
+        Cancion can2 = new Cancion("SPIRIT OF X2C", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
+        Cancion can3 = new Cancion("DID IT AGAIN", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
+        Cancion can4 = new Cancion("WORLD ON FIRE", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
+        Cancion can5 = new Cancion("SUN MOON", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
+
+        System.out.println(Cancion.estaCancion("ALL NIGHT LONG"));
+        System.out.println(Cancion.estaIDCancion("ALL NIHGT LONG"));
+        System.out.println(Usuario.estaContrasenna("alex32"));
+
         List<Usuario> usuarios = usuarioDao.seleccionar();
         usuarios.forEach(usuario -> {
 
             System.out.println(usuario);
         }
         );
+
+        menu();
+        /*
         
-/*
+        
+                String nombre = "alex32";
+        Usuario usu = null;
+        if (Usuario.esta(nombre) == true) {
+            System.out.println(Usuario.estaID(nombre));
+        }
+        
+        
         List<Cancion> canciones = cancionDao.seleccionar();
         canciones.forEach(cancion -> {
             System.out.println("cancion = " + cancion);
@@ -73,7 +89,11 @@ public class MiAplicacionBeMusic {
         );
         
         visualizarUsuarios();
+         
+        Usuario usu1 = new Usuario ("url:foto_perfil","alonso_2022","12345","Alonso","Pérez","alonso@gmail.com",678384810);
+        Usuario usu2 = new Usuario ("url:foto_perfil","alex32","12345","Alejandro","Perez","alejandro@gmail.com",654321098);
         
+        usuarioDao.insertar(usu2);
         
         
         
@@ -109,23 +129,23 @@ public class MiAplicacionBeMusic {
             postList.add(post);
         }
         );
-*/
-        /*
+         */
+ /*
         Post post1 = new Post(1, 3, "Cancion que he escuchado hoy y me ha recordado a verano");
         postDao.insertar(post1);
 
         Comentario comnen = new Comentario("url:reaccion", 8, "Me gusta mucho esta cancion!!", 1, 23);
         comentarioDao.insertar(comnen);
-         */
-        Time duracion = Time.valueOf("00:03:22");
+
+ Time duracion = Time.valueOf("00:03:22");
         Cancion cancion = new Cancion("Joven ", "D.Valentino", "Kendrick Lamar", "url:", duracion, 2022);
 
         visualizarCanciones();
         boolean esta = canList.contains(cancion);
         System.out.println(esta);
         //menu();
-
-        /*
+         */
+ /*
         try {
             List<Cancion> canciones = cancionDao.seleccionar();
             canciones.forEach(cancion -> {
@@ -280,7 +300,7 @@ public class MiAplicacionBeMusic {
         }
     }
 
-    public static void menuUsuario(int id) {
+    public static void menuUsuario(int id) throws SQLException {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("-----------------------------------------");
@@ -299,10 +319,10 @@ public class MiAplicacionBeMusic {
             opcion = ent.nextInt();
             switch (opcion) {
                 case 1:
-
+                    Post.publicarPost(id);
                     break;
                 case 2:
-
+                    System.out.println(id);
                     break;
                 case 3:
 
@@ -374,12 +394,12 @@ public class MiAplicacionBeMusic {
                     break;
                 case 5:
                     System.out.println("Introduce el id de la cancion que quiere eliminar: ");
-                     id = ent.nextInt();
+                    id = ent.nextInt();
                     cancionDao.eliminar(id);
                     break;
                 case 6:
                     System.out.println("Introduce el id de usuario que quiere eliminar: ");
-                     id = ent.nextInt();
+                    id = ent.nextInt();
                     usuarioDao.eliminar(id);
                     break;
                 case 0:
@@ -395,16 +415,25 @@ public class MiAplicacionBeMusic {
 
     }
 
-    public static void crearPlaylist() {
+    public static void crearPlaylist() throws SQLException {
+        List<Cancion> canciones = cancionDao.seleccionar();
+        canciones.forEach(cancion -> {
+            canList.add(cancion);
+            System.out.println(cancion);
+        }
+        );
+
         PlayList playlist1 = new PlayList();
         int id = -1;
         String nombre_playlist;
         System.out.println(canList);
+
         System.out.println("Introduce el nombre de la nueva playList: ");
-        nombre_playlist = ent.nextLine();
+
         nombre_playlist = ent.nextLine();
         while (id != 0) {
             System.out.println("Introduce el id de la cancion que quieres añadir a la PlayList, introduce 0 para terminar el proceso: ");
+            id = ent.nextInt();
             for (Cancion can : canList) {
                 if (can.id_cancion == id) {
                     playlist1.agregarCancion(can);
@@ -421,34 +450,32 @@ public class MiAplicacionBeMusic {
         imp.leerArchivoCancion(nombreArchivo);
     }
 
-    public static void iniciarUsuario() {
+    public static void iniciarUsuario() throws SQLException {
+        Usuario usu = null;
         String nombre;
+        int id;
         String contrasenna;
+        String contrasennaCifrada;
         System.out.println("-----------------------------------------");
         System.out.println("--         REGISTRO USUARIO           ---");
         System.out.println("-----------------------------------------");
         ent.nextLine();
         System.out.println("--Introduce Nombre de Usuario: ");
         nombre = ent.nextLine();
-        if (Usuario.esta(nombre)) {
+        if (Usuario.esta(nombre) == true) {
+            id = Usuario.estaID(nombre);
+            contrasennaCifrada = Usuario.estaContrasenna(nombre);
             System.out.println("Introduce contraseña: ");
             contrasenna = ent.nextLine();
-            if(contrasenna == (Usuario.comparadorContrasennas(Usuario.seleccionarUsuarios(), nombre)))
-            menuUsuario(Usuario.estaID(nombre));
-        } else {
-            System.out.println("Usuario no encontrado en el sistema.");
+            if (Usuario.comparadorContrasennas(contrasennaCifrada, contrasenna) == true) {
+                menuUsuario(id);
+            } else {
+                System.out.println("Usuario no encontrado en el sistema o Contraseña incorrecta.");
+            }
+
         }
 
-        
-
-    }//SIN TERMINAR
-    
-
-    
-    
-    
-    
-    
+    }
 
     public static void inicioAdmin() throws SQLException {
         int contrasenna = 1234;
@@ -465,13 +492,6 @@ public class MiAplicacionBeMusic {
 
     } //TERMINADO
 
-
-
-    
-    
-    
-    
-    
     public static void visualizarUsuarios() throws SQLException {
         try {
             List<Usuario> usuarios = usuarioDao.seleccionar();
@@ -528,27 +548,6 @@ public class MiAplicacionBeMusic {
 
     }
 
-
- 
- 
-
-    
-    
-    
-                   
-    
-  
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
 }
 /*
     public static List<Usuario> listarUsuario() throws SQLException{

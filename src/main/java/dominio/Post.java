@@ -4,20 +4,26 @@
  */
 package dominio;
 
+import datos.PostDao;
+import interfaces.InterfazPost;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 /**
  *
  * @author Alumno Mañana
  */
-public class Post implements Serializable{
+public class Post implements Serializable {
+
+    static Scanner ent = new Scanner(System.in);
     public int id_post;
     public Date fecha_publicacion;
     public int id_usuario; //FOREIGN KEY 
     public int id_cancion; //FOREIGN KEY 
-    public String descripcion; 
+    public String descripcion;
 
     public Post(int id_post, Date fecha_publicacion, int id_usuario, int id_cancion, String descripcion) {
         this.id_post = id_post;
@@ -28,7 +34,7 @@ public class Post implements Serializable{
     }
 
     public Post(int id_usuario, int id_cancion, String descripcion) {
-       
+
         this.fecha_publicacion = Date.valueOf(LocalDate.now());
         this.id_usuario = id_usuario;
         this.id_cancion = id_cancion;
@@ -87,11 +93,33 @@ public class Post implements Serializable{
         sb.append('}');
         return sb.toString();
     }
-    
-    
-    
-    
-    
-    
-    
+
+    public static void publicarPost(int id) throws SQLException {
+        InterfazPost postDao = new PostDao();
+        String nombre_cancion;
+        String descripcion = "";
+        int id_cancion = -1;
+        System.out.println("-----------------------------------------");
+        System.out.println("--           PUBLICAR POST            ---");
+        System.out.println("-----------------------------------------");
+        System.out.println("--Introduce el nombre de la cancion : ");
+        nombre_cancion = ent.nextLine();
+        nombre_cancion = ent.nextLine();
+        if (Cancion.estaCancion(nombre_cancion) == true) {
+            id_cancion = Cancion.estaIDCancion(nombre_cancion);
+            System.out.println("Introduce descripcion del post: ");
+            descripcion = ent.nextLine();
+        } else {
+            System.out.println("El nombre de la cancion no se encuentra en el sistema.");
+        }
+        if (id_cancion != -1) {
+            Post post = new Post(id, id_cancion, descripcion);
+            postDao.insertar(post);
+            System.out.println("Post publicado correctamente");
+        } else {
+            System.out.println("No se ha publicado el post");
+        }
+
+    }
+
 }
