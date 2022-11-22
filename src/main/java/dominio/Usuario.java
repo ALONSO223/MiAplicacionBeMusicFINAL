@@ -239,16 +239,7 @@ public class Usuario implements Serializable {
         return usuarioLista;
     }
 
-    public static List<Usuario> seleccionarUsuariosID(int id) {
-        InterfazUsuario usuarioDao = new UsuarioDao();
-        List<Usuario> usuarioLista = null;
-        try {
-            usuarioLista = usuarioDao.seleccionar();
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        }
-        return usuarioLista;
-    }
+    
 
     public static boolean esta(String nombre) {
         Usuario usuario = null;

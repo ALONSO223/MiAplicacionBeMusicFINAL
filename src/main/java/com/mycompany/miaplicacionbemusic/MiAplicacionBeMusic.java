@@ -9,6 +9,7 @@ import java.util.List;
 import dominio.Usuario;
 import datos.*;
 import datosFichero.implementacion;
+import dominio.Amigos;
 import interfaces.*;
 import dominio.Cancion;
 import dominio.Comentario;
@@ -51,13 +52,25 @@ public class MiAplicacionBeMusic {
     static InterfazComentario comentarioDao = new ComentarioDao();
 
     public static void main(String[] args) throws SQLException, ParseException {
+        System.out.println(Usuario.seleccionarUsuarios());
+        System.out.println(Cancion.seleccionarCancion());
+        System.out.println(Usuario.estaID("alonso_2022"));
+        System.out.println(Cancion.estaCancion("WORLD ON FIRE"));
+        System.out.println(Cancion.estaIDCancion("WORLD ON FIRE"));
+        
         Time duracion = Time.valueOf("00:03:22");
         Cancion can1 = new Cancion("ALL NIGHT LONG", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
         Cancion can2 = new Cancion("SPIRIT OF X2C", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
         Cancion can3 = new Cancion("DID IT AGAIN", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
         Cancion can4 = new Cancion("WORLD ON FIRE", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
         Cancion can5 = new Cancion("SUN MOON", "Lancey Fox", "LIFE IN HELL", "URL:", duracion, 2022);
-
+        
+        Usuario usu10 = new Usuario ("url:foto_perfil","juancar","0000","Juan Carlos","Pérez","juanqui@gmail.com",633312654);
+        Usuario usu11 = new Usuario ("url:foto_perfil","joselu","000011","Jose","Gomez","joselu@gmail.com",654321123);
+        Usuario usu12 = new Usuario ("url:foto_perfil","pablete112","112","Pablo","Astur","pablete@gmail.com",666555444);
+        
+        
+        
         System.out.println(Usuario.devolverUsuario(32));
 
         System.out.println(Cancion.estaCancion("ALL NIGHT LONG"));
@@ -91,7 +104,7 @@ public class MiAplicacionBeMusic {
         }
         );
 
-        //menu();
+        menu();
         /*
         
         
@@ -331,7 +344,7 @@ public class MiAplicacionBeMusic {
             System.out.println("--  1- PUBLICAR POST CANCION           --"); //necesario id
             System.out.println("--  2- COMENTAR                        --"); //necesario id
             System.out.println("--  3- CAMBIAR CORREO ELECTRONICO      --"); //necesario id 
-            System.out.println("--  4- BUSCAR USUARIO                  --"); //necesario id de otro usuario 
+            System.out.println("--  4- SEGUIR USUARIO                  --"); //necesario id de otro usuario 
             System.out.println("--  5- CREAR PLAYLIST (FORMATO .TXT)   --"); //terminado
             System.out.println("--  6- ELIMINAR CUENTA                 --"); //terminado
             System.out.println("--  0- SALIR                           --");
@@ -344,13 +357,13 @@ public class MiAplicacionBeMusic {
                     Post.publicarPost(id);
                     break;
                 case 2:
-                    System.out.println(id);
+                    Comentario.publicarComentario(id);
                     break;
                 case 3:
                     actualizarCorreo(id);
                     break;
                 case 4:
-
+                    Amigos.seguirUsuario(id);
                     break;
                 case 5:
                     crearPlaylist();
@@ -470,10 +483,11 @@ public class MiAplicacionBeMusic {
         imp.crearArchivo(nombreArchivo);
         imp.escribirArchivoCancion(nombreArchivo, contenido);
         imp.leerArchivoCancion(nombreArchivo);
+        playlist1.calcularDuracion();
     }
 
     public static void iniciarUsuario() throws SQLException {
-        Usuario usu = null;
+
         String nombre;
         int id;
         String contrasenna;
@@ -503,7 +517,7 @@ public class MiAplicacionBeMusic {
         Usuario usuario = new Usuario();
         usuario = Usuario.devolverUsuario(id);
         boolean seguro;
-
+        ent.nextLine(); 
         System.out.println("El correo actual es " + usuario.getCorreo() + ", esta seguro de que quiere cambiarlo?(S/N)");
         String seguridad = ent.nextLine();
         if (seguridad.toUpperCase() == "S") {
@@ -592,8 +606,9 @@ public class MiAplicacionBeMusic {
 
     }
 
+    
 }
-/*
+    /*
     public static List<Usuario> listarUsuario() throws SQLException{
         List<Usuario> usuarios = usuarioDao.seleccionar();
         usuarios.forEach(usuario -> {
@@ -621,7 +636,7 @@ public class MiAplicacionBeMusic {
 }
 
     
- */
+     */
  /*
    //Función para insertar un Usuario a la base de datos desde la terminal (menu1)
     //Función que conecta con la clase UsuarioDao para hacer uso del metodo insertar(Usuario)
@@ -666,4 +681,4 @@ public class MiAplicacionBeMusic {
             }
         }
     }
- */
+     */

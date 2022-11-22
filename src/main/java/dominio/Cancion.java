@@ -213,7 +213,7 @@ public class Cancion implements Serializable {
         int id = 0;
         for (int i = 0; i < cn.seleccionarCancion().size(); i++) {
             if (cancion.equals(cn.seleccionarCancion().get(i).getNombre_cancion())) {
-                id = cn.getId_cancion();
+                id = cn.seleccionarCancion().get(i).getId_cancion();
             }
         }
         return id;

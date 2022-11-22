@@ -1,9 +1,11 @@
 datos/PostDao.class
 dominio/Comentario.class
+datos/AmigosDao.class
 dominio/Post.class
 dominio/Amigos.class
 dominio/PlayList.class
 interfaces/InterfazUsuario.class
+interfaces/InterfazAmigos.class
 interfaces/InterfazComentario.class
 interfaces/InterfazPost.class
 datos/CancionDao.class

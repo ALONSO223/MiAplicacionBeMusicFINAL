@@ -6,12 +6,14 @@
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/interfaces/InterfazPost.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/datos/ComentarioDao.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/com/mycompany/miaplicacionbemusic/MiAplicacionBeMusic.java
+/Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/datos/AmigosDao.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/dominio/Usuario.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/interfaces/InterfazComentario.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/datos/PostDao.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/dominio/PlayList.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/dominio/Post.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/dominio/Amigos.java
+/Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/interfaces/InterfazAmigos.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/datos/UsuarioDao.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/dominio/Cancion.java
 /Users/alooo/NetBeansProjects/MiAplicacionBeMusicFINAL/src/main/java/dominio/Comentario.java

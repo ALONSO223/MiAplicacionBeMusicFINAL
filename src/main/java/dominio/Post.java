@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -24,6 +25,11 @@ public class Post implements Serializable {
     public int id_usuario; //FOREIGN KEY 
     public int id_cancion; //FOREIGN KEY 
     public String descripcion;
+
+    public Post() {
+    }
+    
+    
 
     public Post(int id_post, Date fecha_publicacion, int id_usuario, int id_cancion, String descripcion) {
         this.id_post = id_post;
@@ -99,11 +105,12 @@ public class Post implements Serializable {
         String nombre_cancion;
         String descripcion = "";
         int id_cancion = -1;
+        ent.nextLine();
         System.out.println("-----------------------------------------");
         System.out.println("--           PUBLICAR POST            ---");
         System.out.println("-----------------------------------------");
         System.out.println("--Introduce el nombre de la cancion : ");
-        nombre_cancion = ent.nextLine();
+        
         nombre_cancion = ent.nextLine();
         if (Cancion.estaCancion(nombre_cancion) == true) {
             id_cancion = Cancion.estaIDCancion(nombre_cancion);
@@ -120,6 +127,42 @@ public class Post implements Serializable {
             System.out.println("No se ha publicado el post");
         }
 
+    }
+    
+    
+    public static List<Post> seleccionarPost() {
+        InterfazPost postDao = new PostDao();
+        List<Post> postLista = null;
+        try {
+            postLista = postDao.seleccionar();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+        return postLista;
+    }
+    
+    
+    public static boolean estaPost(int id) {
+        Post p = null;
+        boolean esta = false;
+        for (int i = 0; i < p.seleccionarPost().size(); i++) {
+            if (id==p.seleccionarPost().get(i).getId_post()){
+                esta = true;
+            }
+        }
+        return esta;
+        
+    }
+    
+    
+    public static Post devolverPost(int id){
+        Post p = new Post();
+        for (int i = 0; i < p.seleccionarPost().size(); i++) {
+            if(id == p.seleccionarPost().get(i).getId_usuario()){
+                p = p.seleccionarPost().get(i);
+            }
+        }
+        return p;
     }
 
 }
