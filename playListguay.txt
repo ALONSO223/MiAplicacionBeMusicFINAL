@@ -1,0 +1,9 @@
+PlayList{id_playlist=0, 
+CancionesInsertadas=
+[
+Cancion{id_cancion=15, nombre_cancion=Yamakasi, artista=Sticky MA, nombre_album=Kombawa, portada=url:, duración cancion en segundos= 00:02:26, fecha_cancion=2020} 
+, 
+Cancion{id_cancion=12, nombre_cancion=DID IT AGAIN, artista=Lancey Fox, nombre_album=LIFE IN HELL, portada=URL:, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
+, 
+Cancion{id_cancion=13, nombre_cancion=WORLD ON FIRE, artista=Lancey Fox, nombre_album=LIFE IN HELL, portada=URL:, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
+]}

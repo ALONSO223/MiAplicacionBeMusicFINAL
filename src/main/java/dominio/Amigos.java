@@ -87,6 +87,7 @@ public class Amigos {
     
     public static void seguirUsuario(int id) throws SQLException {
         visualizarUsuarios();
+        String opcion;
         System.out.println("---------------------------------------------------");
         System.out.println("---------------------------------------------------");
        InterfazAmigos amigosDao = new AmigosDao();
@@ -96,8 +97,8 @@ public class Amigos {
         if (Usuario.esta(nombre) == true) {
             id2 = Usuario.estaID(nombre);
             System.out.println("Quieres seguir a " + Usuario.devolverUsuario(id2).getNombre() + " " + Usuario.devolverUsuario(id2).getApellidos() + " ? (S/N):");
-            String opcion = ent.nextLine();
-            if (opcion.toUpperCase() == "S") {
+             opcion = ent.nextLine();
+            if ("S".equals(opcion.toUpperCase())) {
                 Amigos amistadRegistro = new Amigos(id, id2);
                 amigosDao.insertar(amistadRegistro);
                 System.out.println("Solicitud completada, ya sois amigos.");

@@ -52,7 +52,11 @@ public class MiAplicacionBeMusic {
     static InterfazComentario comentarioDao = new ComentarioDao();
 
     public static void main(String[] args) throws SQLException, ParseException {
-        System.out.println(Usuario.seleccionarUsuarios());
+       
+        
+        menu();
+        
+        /*System.out.println(Usuario.seleccionarUsuarios());
         System.out.println(Cancion.seleccionarCancion());
         System.out.println(Usuario.estaID("alonso_2022"));
         System.out.println(Cancion.estaCancion("WORLD ON FIRE"));
@@ -105,7 +109,7 @@ public class MiAplicacionBeMusic {
         );
 
         menu();
-        /*
+        
         
         
                 String nombre = "alex32";
@@ -298,7 +302,7 @@ public class MiAplicacionBeMusic {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("-----------------------------------------");
-            System.out.println("--    APLPICACION BEMUSIC    ---");
+            System.out.println("--       APLPICACION BEMUSIC          ---");
             System.out.println("-----------------------------------------");
             System.out.println("-----------------------------------------");
             System.out.println("--  1-  REGISTRAR USUARIO              --");
@@ -332,6 +336,7 @@ public class MiAplicacionBeMusic {
             for (int i = 0; i < 2; i++) {
                 System.out.println("");
             }
+                    
         }
     }
 
@@ -464,7 +469,7 @@ public class MiAplicacionBeMusic {
         System.out.println(canList);
 
         System.out.println("Introduce el nombre de la nueva playList: ");
-
+        nombre_playlist = ent.nextLine();
         nombre_playlist = ent.nextLine();
         while (id != 0) {
             System.out.println("Introduce el id de la cancion que quieres añadir a la PlayList, introduce 0 para terminar el proceso: ");
@@ -483,7 +488,7 @@ public class MiAplicacionBeMusic {
         imp.crearArchivo(nombreArchivo);
         imp.escribirArchivoCancion(nombreArchivo, contenido);
         imp.leerArchivoCancion(nombreArchivo);
-        playlist1.calcularDuracion();
+        System.out.println(playlist1.calcularDuracion());
     }
 
     public static void iniciarUsuario() throws SQLException {

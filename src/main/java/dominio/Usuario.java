@@ -213,14 +213,13 @@ public class Usuario implements Serializable {
 
         Usuario usuarioRegistro = new Usuario(foto_perfil, nombreUsuario, contrasenna, nombre, apellidos, email, telefono);
         //el usuario registro lo crea 
-        if (nombreUsuario != null && contrasenna != null && nombre != null && apellidos != null && email != null && telefono != 0) {
-            boolean esta = MiAplicacionBeMusic.usuList.contains(usuarioRegistro);
-            if (esta == false) {
+        if (nombreUsuario != null && contrasenna != null) {
+            if (esta(nombreUsuario)==false) {
                 usuarioDao.insertar(usuarioRegistro);
                 MiAplicacionBeMusic.usuList.add(usuarioRegistro);
                 System.out.println("Usuario registrado correctamente en la base de datos!");
-            } else if (esta == true) {
-                System.out.println("La dirección de correo o el nombre de usuairo o el telefono ya están en uso. Porfavor inserte datos no utilizados anteriormente");
+            } else {
+                System.out.println("El nombre de usuario ya están en uso. Porfavor inserte datos no utilizados anteriormente");
                 MiAplicacionBeMusic.menu();
             }
         } else {

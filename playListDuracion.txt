@@ -1,0 +1,9 @@
+PlayList{id_playlist=0, 
+CancionesInsertadas=
+[
+Cancion{id_cancion=13, nombre_cancion=WORLD ON FIRE, artista=Lancey Fox, nombre_album=LIFE IN HELL, portada=URL:, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
+, 
+Cancion{id_cancion=14, nombre_cancion=SUN MOON, artista=Lancey Fox, nombre_album=LIFE IN HELL, portada=URL:, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
+, 
+Cancion{id_cancion=11, nombre_cancion=SPIRIT OF X2C, artista=Lancey Fox, nombre_album=LIFE IN HELL, portada=URL:, duración cancion en segundos= 00:03:22, fecha_cancion=2022} 
+]}
